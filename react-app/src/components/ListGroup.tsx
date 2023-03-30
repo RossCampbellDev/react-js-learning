@@ -1,15 +1,34 @@
-function ListGroup() {
-    const items = [
-        "Ross",
-        "Charlie",
-        "Trab"
-    ];
+import { useState } from "react";
+
+interface Props {
+	heading: string;
+	items: string[];
+    onSelectItem: (item: string) => void;
+}
+
+function ListGroup({ items, heading, onSelectItem }: Props) {
+    const [selectedIndex, setSelectedIndex] = useState(-1);
+    
+    const getMessage = () => {
+        items.length === 0 ? <p>No Item Found</p> : null;
+    }
 
 	return (
         <>
-        <h1>List!</h1>
+        <h1>{heading}</h1>
+        { getMessage() }
+        { items.length === 0 && <p>No Items</p> }
         <ul className="list-group">
-            {items.map(item => <li className="list-group-item">{item}</li>)}
+            {items.map((item, index) => (
+                <li 
+                    className={selectedIndex === index ? 'list-group-item active' : 'list-group-item'}
+                    onClick={() => { 
+                        setSelectedIndex(index); 
+                        onSelectItem(item);
+                    }}
+                    >{item}
+                </li>
+            ))}
         </ul>
         </>
     );
