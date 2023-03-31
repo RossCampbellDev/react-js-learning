@@ -7,6 +7,9 @@ interface Props {
 }
 
 function ListGroup({ items, heading, onSelectItem }: Props) {
+    if (!items)
+        return (<div></div>)
+
     const [selectedIndex, setSelectedIndex] = useState(-1);
     
     const getMessage = () => {
@@ -21,6 +24,7 @@ function ListGroup({ items, heading, onSelectItem }: Props) {
         <ul className="list-group">
             {items.map((item, index) => (
                 <li 
+                    key={item}
                     className={selectedIndex === index ? 'list-group-item active' : 'list-group-item'}
                     onClick={() => { 
                         setSelectedIndex(index); 
